@@ -13,6 +13,7 @@ import java.lang.Exception
 import com.orynastarkina.intelliweights.R
 import com.orynastarkina.intelliweights.utils.*
 import kotlinx.android.synthetic.main.fragment_device_process.*
+import java.lang.StringBuilder
 import java.nio.charset.Charset
 
 
@@ -62,15 +63,27 @@ class DeviceProcessFragment : Fragment() {
 
                 val data = characteristic?.value
 
-                activity?.runOnUiThread {
-                    deviceDataView.text = ""
+//                activity?.runOnUiThread {
+//                    deviceDataView.text = ""
+//
+//                    if (data != null) {
+//                        for (char in data) {
+//                            deviceDataView.append(String.format("%02x", char))
+//                        }
+//                    }
+//                }
 
-                    if (data != null){
-                        for (char in data){
-                            deviceDataView.append(String.format("%02x", char))
-                        }
+                // send data to Java
+                data?.run {
+                    val dataBuilder = StringBuilder()
+                    forEach {
+                        dataBuilder.append(String.format("%02x", it))
                     }
+
+                    BLEDataBridge.onBLEData(dataBuilder.toString())
+
                 }
+
             }
         }
     }
@@ -101,6 +114,7 @@ class DeviceProcessFragment : Fragment() {
             true,
             gattCallback
         )
+
 
         activity?.runOnUiThread {
             waitDeviceProgressbar.visibility = View.VISIBLE
