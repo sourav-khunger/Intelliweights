@@ -63,6 +63,7 @@ class DeviceProcessFragment : Fragment() {
 
                 val data = characteristic?.value
 
+
 //                activity?.runOnUiThread {
 //                    deviceDataView.text = ""
 //
