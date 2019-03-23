@@ -73,6 +73,7 @@ class DeviceProcessFragment : Fragment() {
 //                    }
 //                }
 
+
                 // send data to Java
                 data?.run {
                     val dataBuilder = StringBuilder()
